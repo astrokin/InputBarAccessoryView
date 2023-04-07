@@ -28,6 +28,11 @@
 import Foundation
 import UIKit
 
+public protocol InputTextCustomViewDelegate: AnyObject {
+    
+    func willPerformPaste()
+}
+
 /**
  A UITextView that has a UILabel embedded for placeholder text
  
@@ -139,6 +144,8 @@ open class InputTextView: UITextView {
     /// The constraints of the placeholderLabel
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
  
+    open weak var customDelegate: InputTextCustomViewDelegate?
+    
     // MARK: - Initializers
     
     public convenience init() {
@@ -244,6 +251,7 @@ open class InputTextView: UITextView {
     open override func paste(_ sender: Any?) {
         
         guard isImagePasteEnabled, let image = UIPasteboard.general.image else {
+            customDelegate?.willPerformPaste()
             return super.paste(sender)
         }
         for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
