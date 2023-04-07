@@ -12,6 +12,8 @@ import InputBarAccessoryView
 final class FacebookInputBar: InputBarAccessoryView {
     
     override init(frame: CGRect) {
+        Self.defaultBackgroundColor = .clear
+        
         super.init(frame: frame)
         configure()
     }
@@ -21,31 +23,26 @@ final class FacebookInputBar: InputBarAccessoryView {
     }
     
     func configure() {
-        let button = InputBarButtonItem()
-        button.onKeyboardSwipeGesture { item, gesture in
-            if gesture.direction == .left {
-                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: true)
-            } else if gesture.direction == .right {
-                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 36, animated: true)
-            }
+        
+        sendButton
+            .configure {
+                $0.setSize(CGSize(width: 52, height: 36), animated: false)
+                $0.isEnabled = false
+                $0.title = "Пиу"
+                $0.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+            }.onTouchUpInside {
+                $0.inputBarAccessoryView?.didSelectSendButton()
         }
-        button.setSize(CGSize(width: 36, height: 36), animated: false)
-        button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.tintColor = .systemBlue
+        
+        separatorLine.isHidden = true
+        inputTextView.placeholder = "Type msg"
+        inputTextView.backgroundColor = .white
         inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
-        if #available(iOS 13, *) {
-            inputTextView.layer.borderColor = UIColor.systemGray2.cgColor
-        } else {
-            inputTextView.layer.borderColor = UIColor.lightGray.cgColor
-        }
-        inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.cornerRadius = 16.0
         inputTextView.layer.masksToBounds = true
         inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        setLeftStackViewWidthConstant(to: 36, animated: false)
-        setStackViewItems([button], forStack: .left, animated: false)
+        setLeftStackViewWidthConstant(to: 16, animated: false)
 
         shouldAnimateTextDidChangeLayout = true
     }

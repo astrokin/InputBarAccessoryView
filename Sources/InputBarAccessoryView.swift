@@ -142,13 +142,7 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
 
-    private static let defaultBackgroundColor: UIColor = {
-        if #available(iOS 13, *) {
-            return .systemBackground
-        } else {
-            return .white
-        }
-    }()
+    public static var defaultBackgroundColor: UIColor = .systemBackground
     
     /// The InputTextView a user can input a message in
     open lazy var inputTextView: InputTextView = {
