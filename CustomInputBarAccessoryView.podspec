@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name                  = 'CustomInputBarAccessoryView'
-    s.version               = '6.2.0'
+    s.version               = '6.2.1'
     s.summary               = 'CustomInputBarAccessoryView'
     s.description           = 'CustomInputBarAccessoryView'
     s.homepage              = 'https://github.com/astrokin/InputBarAccessoryView'
